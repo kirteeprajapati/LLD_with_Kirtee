@@ -1,8 +1,21 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <stdexcept>
+#include <iostream>     // cin, cout
+#include <string>       // std::string
+#include <vector>       // std::vector
+#include <unordered_map>// hash maps
+#include <algorithm>    // sort, min, max, find
+#include <map>          // ordered maps (tree-based)
+#include <set>          // unique sorted elements
+#include <queue>        // queue, priority_queue
+#include <stack>        // stack
+#include <deque>        // double-ended queue
+#include <stdexcept>    // runtime_error, invalid_argument
+#include <optional>    // optional return values
+#include <memory>      // unique_ptr, shared_ptr
+#include <limits>      // INT_MAX, numeric_limits
+#include <cmath>       // abs, sqrt, pow
+#include <sstream>    // stringstream (parsing)
+#include <utility>    // move, pair
+
 
 class Account{
     private:
