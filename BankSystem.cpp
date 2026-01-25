@@ -69,12 +69,34 @@ class AccountRepository{
         return accounts;
     }
 };     
-                                                           
+   
+class TransferService{
+    private:
+    AccountRepository &repo;
+    
+    public:
+    TransferService(AccountRepository &repo): repo(repo){}
+    
+    void transfer (const std::string&from, const std::string&to, long amount){
+        if(from==to) throw std::invalid_argument("Cannot tranfer to the same account");
+        if(amount<=0) throw std::invalid_argument("Transfer amount must be positive");
+        
+        Account &src = repo.getAccount(from);
+        Account &dst = repo.getAccount(to);
+        
+        src.debit(amount);
+        dst.credit(amount);
+    }
+};
+
+
 class CommandProcessor{
     private:
     AccountRepository&repo;
+    TransferService transferService;
+    
     public:
-    CommandProcessor(AccountRepository& repo): repo(repo){}
+    CommandProcessor(AccountRepository& repo): repo(repo), transferService(repo) {}
     
     void process(const std::vector<std::string> &query){
         const std::string& command = query[0];
@@ -91,11 +113,17 @@ class CommandProcessor{
             long amount = std::stol(query[1]);
             const std::string&name = query[2];
             repo.getAccount(name).debit(amount);
+        } else if(command=="Transfer"){
+            const std::string &src = query[1];
+            const std::string &dist = query[2];
+            long amount = std::stol(query[3]);
+            transferService.transfer(src, dist, amount);
         } else {
             throw std::runtime_error("Unknown Command");
         }
     }
-};    
+};                        
+ 
 
 void printAllAccounts(const AccountRepository &repo){
         for(const auto& [name, account] : repo.getAllAccounts()){
@@ -108,12 +136,13 @@ int main(){
     CommandProcessor processor(repo);
     
     vector<vector<string>> queries={
-        {"CreateAccount", "1", "Kirtee"},
-        {"CreateAccount", "2", "Gaurav"},
-        {"Credit", "50", "Kirtee"},
-        {"Credit", "100", "Gaurav"},
-        {"Debit", "20", "Kirtee"},
-        {"Debit", "200", "Gaurav"}
+        {"CreateAccount", "1", "Sahil"},
+        {"CreateAccount", "2", "Ram"},
+        {"Credit", "500", "Sahil"},
+        {"Credit", "100", "Ram"},
+        {"Debit", "20", "Sahil"},
+        {"Debit", "10", "Ram"},
+        {"Transfer", "Sahil", "Ram", "50"}
     };
     
     for(const auto&query : queries){
