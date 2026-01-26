@@ -233,20 +233,46 @@ private:
 };
 
 int main(){
+    std::cout<<"===============OFFROAD CAR TEST===================\n";
     Car *Land_Cruiser = new OffRoadCar("Toyota", "Land Cruiser");   // Because Land_Cruiser is a Car* but points to an OffRoadCar.
+    // Base Interface behaviour
+    Land_Cruiser->honk();        // inherited default behavior
+    Land_Cruiser->wheel();       // final method, cannot be overridden
+    
+    // Engine Lifecycle
     Land_Cruiser->startEngine();
-    ManualTransmission* mt = dynamic_cast<ManualTransmission*>(Land_Cruiser);
-    mt->shiftGear(1);
+    ManualTransmission* manual = dynamic_cast<ManualTransmission*>(Land_Cruiser);
+    if(manual){
+        manual->shiftGear(0);
+        Land_Cruiser->accelerate(50);       // should faild Neutral gear
+        manual->shiftGear(1);
+        Land_Cruiser->accelerate(40);       //
+        Land_Cruiser->brake();              //
+        Land_Cruiser->brake();              //
+        manual->shiftGear(6);               // Invalid Gear
+    }
     Land_Cruiser->accelerate(50);
     Land_Cruiser->brake();
     Land_Cruiser->stopEngine();
     delete Land_Cruiser;                     //non-negotiable in interviews.
 
+    std::cout << "\n=============== ELECTRIC CAR TESTS ================\n";
     Car *BE_6E = new ElectricCars("Mahindra", "BE 6E", {FuelType::PETROL, FuelType::ELECTRIC});
+    BE_6E->honk();
+    BE_6E->wheel();
+    BE_6E->accelerate(30);
     BE_6E->startEngine();
     BE_6E->accelerate(80);
     BE_6E->brake();
+    BE_6E->brake();
     BE_6E->stopEngine();
+    
+
+    //Segregation enforcement: ElectricCars should NOT have gears
+    ManualTransmission* electricManual = dynamic_cast<ManualTransmission*>(BE_6E);
+    if(!electricManual){
+        std::cout<<"Correct: Electric car has no manual transmission\n";
+    }
     delete BE_6E;                    //non-negotiable in interviews.
     return 0;
 
