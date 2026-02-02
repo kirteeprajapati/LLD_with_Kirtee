@@ -1,0 +1,84 @@
+Door Swipes
+Problem
+
+You are given a list of door badge records in the format:
+
+badge_records = [
+  ["Murnhk", "enter"],
+  ["Pzur", "exit"],
+  ["Msryhf", "exit"],
+  ["Mxrxhn", "enter"],
+  ["Jnnbiheo", "exit"],
+  ["Piux", "enter"],
+  ["Cmrcil", "exit"],
+]
+
+
+Each record is [name, action] where action is "enter" or "exit".
+
+Goal: Identify:
+
+People who entered without a badge: someone who entered twice in a row or started with an "enter" while they weren’t previously inside.
+
+People who exited without a badge: someone who exited twice in a row or exited while they weren’t inside.
+
+Rules / Observations
+
+Keep track of each person’s current state (inside or outside).
+
+Initial state is assumed outside.
+
+Iterate over records sequentially:
+
+"enter":
+
+If already inside → add to entered without badge.
+
+Else → mark as inside.
+
+"exit":
+
+If already outside → add to exited without badge.
+
+Else → mark as outside.
+
+At the end, any remaining inside people may also be flagged depending on requirement (optional).
+
+Example
+
+Input:
+
+badge_records = [
+  ["Piux", "enter"],
+  ["Cmrcil", "exit"],
+  ["Mjrohx", "exit"],
+  ["Piux", "enter"],
+]
+
+
+Output:
+
+[['Piux', 'Cmrcil'], ['Mjrohx']]
+
+
+Explanation:
+
+"Piux" entered first → okay.
+
+"Cmrcil" exited without prior entry → flagged.
+
+"Mjrohx" exited without prior entry → flagged.
+
+"Piux" entered again while inside → flagged for entering without badge.
+
+Implementation Hints
+
+Use a set or dict to track people currently inside.
+
+Use two sets/lists to track violators for "entered without badge" and "exited without badge".
+
+Return lists in lexicographical order if needed.
+
+Function Signature
+def analyze_door_swipes(badge_records: List[List[str]]) -> List[List[str]]:
+    pass

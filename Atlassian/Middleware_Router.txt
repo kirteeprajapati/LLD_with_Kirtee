@@ -1,0 +1,72 @@
+Middleware Router
+
+We need to implement a router that maps paths to results based on registered routes.
+
+Problem Details
+
+Routes are registered as tuples: (path, result).
+Examples:
+
+routes = [
+    ("/users", "Users List"),
+    ("/users/:id", "User Detail"),
+    ("/products/*", "All Products")
+]
+
+Queries are paths we need to match against the registered routes.
+Examples:
+
+queries = [
+    "/users",
+    "/users/123",
+    "/products/electronics/phones"
+]
+
+Matching Rules
+
+Exact match: Query matches route path exactly → return route result.
+
+Parameter match (:): Route can define dynamic segments: /users/:id matches /users/123.
+
+Wildcard (*): Route can end with * to match any remaining path segments.
+Example: /products/* matches /products/electronics/phones.
+
+Order matters: Routes are evaluated in the order they are registered. First match wins.
+
+No match → return "404".
+
+Examples
+
+Registered routes:
+
+routes = [
+    ("/users", "Users List"),
+    ("/users/:id", "User Detail"),
+    ("/products/*", "All Products")
+]
+
+
+Queries & Expected Output:
+
+Query	Output
+/users	"Users List"
+/users/42	"User Detail"
+/products/electronics/phones	"All Products"
+/orders	"404"
+Implementation Hints
+
+Iterate queries.
+
+For each query, iterate routes in registration order:
+
+Check for exact match.
+
+Check for dynamic segment match (:).
+
+Check for wildcard match (*).
+
+Return the first match; otherwise "404".
+
+Function Signature
+def middleware_router(routes: List[Tuple[str, str]], queries: List[str]) -> List[str]:
+    pass

@@ -1,0 +1,114 @@
+Word Wrap Problem
+
+We want to arrange words into lines, connecting them with hyphens -, while ensuring that:
+
+No line exceeds maxLen characters (including hyphens).
+
+Words are kept in order.
+
+Words that are longer than maxLen cannot fit → skip them.
+
+Return a list of formatted lines.
+
+Example
+
+Input:
+
+words = ["a", "b", "kd", "r"]
+maxLen = 10
+
+
+Output:
+
+["a-b-kd-r"]
+
+
+Explanation:
+
+Total length with hyphens: 1 + 1 + 2 + 1 + 1 = 6 ≤ 10 → fits in one line.
+
+Edge Case:
+
+words = ["eowd", "col_ldnt"]
+maxLen = 3
+
+
+Output:
+
+[]
+
+
+Both words exceed maxLen → no line can be formed.
+
+Approach
+
+Initialize an empty current line list and current length counter.
+
+Iterate over the words:
+
+If word length > maxLen → skip it.
+
+If adding word (and hyphen if line not empty) exceeds maxLen → finalize current line and start a new one.
+
+Else → append word to current line.
+
+After loop → append any remaining words as the last line.
+
+Join words in each line with -.
+
+Time Complexity: 
+𝑂
+(
+𝑁
+)
+O(N), single pass over words.
+Space Complexity: 
+𝑂
+(
+𝑁
+)
+O(N), storing output lines.
+
+Python Implementation
+
+
+from typing import List
+
+def word_wrap(words: List[str], maxLen: int) -> List[str]:
+    result = []
+    current_line = []
+    current_len = 0
+    
+    for word in words:
+        if len(word) > maxLen:
+            continue  # skip words that can't fit
+        
+        # Calculate new length if we add this word
+        added_len = len(word) + (1 if current_line else 0)  # add 1 for hyphen if line not empty
+        
+        if current_len + added_len > maxLen:
+            # finalize current line
+            if current_line:
+                result.append('-'.join(current_line))
+            current_line = [word]
+            current_len = len(word)
+        else:
+            if current_line:
+                current_len += 1  # hyphen
+            current_line.append(word)
+            current_len += len(word)
+    
+    if current_line:
+        result.append('-'.join(current_line))
+    
+    return result
+
+
+Test Cases
+
+print(word_wrap(["a", "b", "kd", "r"], 10))   # ["a-b-kd-r"]
+print(word_wrap(["eowd", "col_ldnt"], 3))    # []
+print(word_wrap(["n", "b", "xd", "e"], 4))   # ["n-b", "xd-e"]
+
+
+This ensures all words are wrapped into lines properly with hyphens without exceeding maxLen.
