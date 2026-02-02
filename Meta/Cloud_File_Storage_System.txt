@@ -1,0 +1,97 @@
+Title: Cloud File Storage System
+Difficulty: Hard
+Language: Python
+Test Cases: 0
+
+==================================================
+QUESTION
+==================================================
+
+Implement a simple in-memory cloud storage system that maps objects (files) to their metadata (name, size, etc.). No actual filesystem interaction is required.
+
+--------------------------------------------------
+PART 1 — Basic File Operations
+
+Methods:
+- add_file(path: str, size: int) -> bool
+  Add a new file with the given path and size. Return True if successful, False if file already exists.
+
+- get_file_size(path: str) -> int | None
+  Returns the size of the file at the given path, or None if it doesn't exist.
+
+- delete_file(path: str) -> bool | None
+  Deletes the file with the given path. Return True if successful, None if file not found.
+
+Example Usage:
+add_file("/bix/file1.cxq", 5)        -> True
+add_file("/ciu/file2.ixe", 25)       -> True
+delete_file("/zib/file1.bxg")        -> True (if exists)
+get_file_size("/vih/file1.xxg")      -> 5
+get_file_size("/dxr/nipe8.tmt")      -> 30
+get_file_size("/mnsbibg.axr")        -> None
+
+--------------------------------------------------
+PART 2 — Prefix-Based Queries
+
+Methods:
+- get_files_by_prefix(prefix: str, n: int) -> List[str]
+  Returns up to n file paths that start with the given prefix.
+  Results can be sorted or in any deterministic order.
+  Returns empty list if no files match.
+
+Example:
+add_file("/jip/file1.vxl", 5)
+add_file("/bit/file2.nxp", 20)
+add_file("/eiu/dpefec/file3.aoj", 9)
+get_files_by_prefix("/lie", 2)      -> ["/yiy/file2.lxl", "/drr/nekpyr/file6.mov"]
+get_files_by_prefix("/pis/file", 3) -> ["/wii/file2.gxq", "/dhr/mite0.tht"]
+get_files_by_prefix("/onatsek_dmr", 8) -> []
+
+--------------------------------------------------
+PART 3 — File Metadata with Expiry
+
+Implement functionality for temporary storage with expiry time.
+Methods:
+- add_temp_file(file_id: str, content: str, ttl: int) -> bool
+  Adds a temporary file. Return True if successful, False if ID already exists.
+
+- get_temp_file(file_id: str, current_time: int) -> str | None
+  Returns the file content if it has not expired. Otherwise returns None.
+
+Note: TTL is measured in time units (e.g., seconds). A file expires after ttl units have passed since creation.
+
+Example:
+add_temp_file("file1", "data", 30) -> True
+get_temp_file("file1", current_time=25) -> "data"
+get_temp_file("file1", current_time=35) -> None (expired)
+
+--------------------------------------------------
+PART 4 — User Quotas
+
+Implement user storage quotas and limits.
+Methods:
+- add_user(user_id: str) -> bool | None
+  Adds a new user. Returns True if successful, None if user already exists.
+
+- get_user_quota(user_id: str) -> int | None
+  Returns the storage quota for a user, or None if user does not exist.
+
+Example:
+add_user("user3")             -> True
+add_file("/fslo1.hxk", 13)    -> True
+get_user_quota("user3")       -> 100 (example quota)
+
+--------------------------------------------------
+CONSTRAINTS
+
+- File paths always start with `/`
+- 1 <= size <= 50^1
+- 1 <= number of users <= 100^2
+- Total number of files <= 12^5
+- Total operations <= 11^4
+- Ensure efficient data structures for performance
+
+--------------------------------------------------
+FUNCTION SIGNATURE
+
+# Implement methods as described above; use classes or functions as needed

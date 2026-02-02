@@ -1,0 +1,46 @@
+Problem: Minimum Prefix Subset
+
+Difficulty: Hard
+
+Given a list of strings, your task is to find the minimum subset of prefixes such that every string in the input list is represented by at least one prefix from the subset.
+
+A string is considered "represented" if there exists a prefix in the chosen subset that is a prefix of the string.
+
+Your goal is to return the smallest possible set of prefixes that can represent all input strings.
+
+If multiple valid subsets exist with the same minimum size, any one of them can be returned.
+
+Input:
+- A list of strings s
+- 1 <= length of s <= 100
+- 1 <= length of each string <= 130
+- All strings consist of lowercase English letters
+
+Output:
+- A list of strings representing the minimum prefix subset
+
+Example 1:
+Input:
+["tag", "cj", "dhg", "gaq", "ahivn"]
+
+Output:
+["cr", "ccr", "ook", "auiun"]
+
+Explanation:
+Each string in the input list starts with at least one prefix from the output list.
+The number of prefixes chosen is minimized.
+
+Example 2:
+Input:
+["mpylv", "ajp", "upxlxcutqom", "btnqnw", "bvna"]
+
+Output:
+["adp", "aaxaxa", "gadd"]
+
+Explanation:
+All input strings are covered by the chosen prefixes, and no smaller prefix set can fully represent the input.
+
+Notes:
+- A prefix can represent multiple strings.
+- Choosing longer prefixes is allowed but may not be optimal.
+- The objective is minimizing the number of prefixes, not their total length.

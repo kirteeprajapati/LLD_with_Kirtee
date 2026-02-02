@@ -1,0 +1,146 @@
+DESIGN BANKING SYSTEM
+====================
+
+Problem Overview
+----------------
+Design and implement an in-memory banking system that supports account management,
+transactions, transfers, analytics, and account lifecycle operations.
+
+The system does NOT interact with any database or filesystem.
+All data must be stored and managed in memory only.
+
+The system should expose multiple operations (APIs) described below and behave
+exactly as specified.
+
+--------------------------------------------------
+PART 1: ACCOUNT CREATION AND BASIC OPERATIONS
+--------------------------------------------------
+
+1. create_account(account_id: int, user_name: string) -> bool
+
+   - Creates a new bank account with the given account_id and user_name.
+   - Each account_id must be unique.
+   - If the account already exists, return false.
+   - If the account is created successfully, return true.
+
+2. deposit(account_id: int, amount: int) -> int
+
+   - Adds the specified amount to the account’s balance.
+   - Returns the updated balance.
+   - If the account does not exist, the operation fails.
+
+3. withdraw(account_id: int, amount: int) -> int | error
+
+   - Withdraws the specified amount from the account.
+   - Returns the updated balance.
+   - If the account does not exist, the operation fails.
+   - If the account balance is insufficient, return an error.
+
+--------------------------------------------------
+PART 2: MONEY TRANSFERS AND TOP ACCOUNTS
+--------------------------------------------------
+
+4. transfer(from_account: int, to_account: int, amount: int) -> bool
+
+   - Transfers money from one account to another.
+   - The transfer must be atomic:
+     either both balances update or neither does.
+   - Returns true if the transfer succeeds.
+   - Returns false if:
+     - Either account does not exist
+     - The source account has insufficient balance
+
+5. get_top_n_accounts(n: int) -> list of account_ids
+
+   - Returns the top N accounts sorted by:
+     1. Highest balance (descending)
+     2. If balances are equal, smaller account_id first
+   - If fewer than N accounts exist, return all of them.
+
+--------------------------------------------------
+PART 3: TRANSACTION HISTORY AND PAYMENTS
+--------------------------------------------------
+
+Each successful financial operation (deposit, withdraw, transfer)
+creates a transaction record.
+
+Each transaction contains:
+- Transaction ID (unique)
+- Transaction type (DEPOSIT, WITHDRAW, TRANSFER)
+- Amount
+- Timestamp
+- Source account (if applicable)
+- Destination account (if applicable)
+
+6. get_last_transactions(account_id: int, n: int) -> list of transaction_ids
+
+   - Returns the most recent N transactions involving the given account.
+   - Transactions should be returned in reverse chronological order.
+   - If fewer than N transactions exist, return all available ones.
+   - If the account does not exist, return an error.
+
+--------------------------------------------------
+PART 4: SCHEDULED / CONDITIONAL PAYMENTS
+--------------------------------------------------
+
+7. schedule_payment(
+      from_account: int,
+      to_account: int,
+      amount: int,
+      delay: int,
+      payment_id: string
+   ) -> string | error
+
+   - Schedules a payment to be executed after a given delay.
+   - Returns a unique payment reference ID.
+   - The payment should fail if:
+     - Either account does not exist
+     - The source account lacks sufficient funds at execution time
+   - Duplicate payment IDs are not allowed.
+
+8. cancel_scheduled_payment(payment_id: string) -> bool
+
+   - Cancels a scheduled payment if it has not been executed yet.
+   - Returns true if cancelled successfully.
+   - Returns false if:
+     - The payment does not exist
+     - The payment is already executed or cancelled
+
+--------------------------------------------------
+PART 5: ACCOUNT MERGE AND CLOSURE
+--------------------------------------------------
+
+9. merge_accounts(source_account: int, target_account: int) -> bool
+
+   - Merges source_account into target_account.
+   - Transfers balance and transaction history.
+   - Source account is closed after merge.
+   - Returns false if either account does not exist.
+
+10. close_account(account_id: int) -> bool
+
+    - Closes an account permanently.
+    - An account can be closed ONLY if its balance is zero.
+    - Returns true if the account is closed.
+    - Returns false otherwise.
+
+--------------------------------------------------
+CONSTRAINTS
+--------------------------------------------------
+
+- Account IDs are positive integers.
+- User names are strings.
+- Number of accounts <= 100,000
+- Number of total operations <= 1,000,000
+- Monetary values fit within 64-bit signed integers.
+- All operations should be optimized for performance.
+- Expected time complexity: near O(1) per operation.
+
+--------------------------------------------------
+NOTES
+--------------------------------------------------
+
+- The system is single-threaded.
+- No persistence or external storage is required.
+- Focus on correctness, clean API design, and efficiency.
+- The solution should be production-quality and interview-ready.
