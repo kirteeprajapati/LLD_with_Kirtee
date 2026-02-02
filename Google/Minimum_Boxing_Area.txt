@@ -1,0 +1,26 @@
+Minimum Boxing Area
+
+You are required to design a data structure that maintains a dynamic set of points
+on a 2D Cartesian plane.
+
+Each point is represented as (x, y).
+
+The data structure must support the following operations:
+
+1. Insert a point (x, y) into the set.
+2. Remove a point (x, y) from the set. It is guaranteed that the point exists.
+3. Query the minimum area of an axis-aligned bounding box that contains
+   all the points currently present in the set.
+
+The bounding box edges must be parallel to the x-axis and y-axis.
+
+If the set of points is empty, the query operation should return 0.
+
+Constraints:
+- Coordinates x and y can be large (up to 10^9 in magnitude).
+- The total number of operations can be up to 10^5.
+- Insert and remove operations may occur in any order.
+- Duplicate points may exist.
+
+Goal:
+Efficiently support all operations, especially the bounding box area query.

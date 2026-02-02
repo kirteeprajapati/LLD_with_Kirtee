@@ -1,0 +1,93 @@
+Question
+You are tracking GPS location errors by comparing measured GPS locations against a set of "golden" (reference) locations. Each location has a timestamp, longitude, and latitude. Calculate the total distance error between expected positions (interpolated from golden locations) and actual measured positions.
+
+Problem Description
+Given:
+
+golden_locations: A list of reference GPS locations with accurate timestamps
+measured_locations: A list of GPS locations from a device being tested
+For each measured location, determine its expected position by interpolating between the two surrounding golden locations based on timestamp, then calculate the distance between the expected and measured positions.
+
+Location Class
+class Location:
+    def __init__(self, time: int, longitude: float, latitude: float):
+        self.time = time
+        self.longitude = longitude
+        self.latitude = latitude
+    
+    def get_time(self) -> int:
+        return self.time
+    
+    def get_location(self) -> Tuple[float, float]:
+        return (self.longitude, self.latitude)
+Part 1 — Calculate Distance Error
+Implement the function to calculate the total distance error between golden and measured locations.
+
+Function Signature
+def get_distance_error(golden_locations: List[Location], 
+                       measured_locations: List[Location]) -> float:
+    pass
+
+def get_distance(longitude1: float, latitude1: float, 
+                 longitude2: float, latitude2: float) -> float:
+    """Calculate Euclidean distance between two coordinates."""
+    pass
+
+def get_expected_location(start: float, current: float, 
+                          current_time: float, total_time: float) -> float:
+    """Linear interpolation between start and current based on time ratio."""
+    pass
+Algorithm
+For each measured location, find the corresponding time window in golden locations
+Interpolate the expected longitude and latitude based on the time ratio
+Calculate the distance between expected and measured coordinates
+Sum up all distance errors
+Example 1
+Input:
+
+golden = [
+    Location(0, 0.0, 0.0),
+    Location(10, 10.0, 10.0)
+]
+measured = [
+    Location(5, 4.0, 6.0)  # Expected: (5.0, 5.0)
+]
+Output:
+
+~2.24
+Explanation:
+
+At time 5, expected position is halfway: (5.0, 5.0)
+Measured position is (4.0, 6.0)
+Distance = sqrt((5-4)² + (5-6)²) = sqrt(1 + 1) = sqrt(2) ≈ 1.41
+Example 2
+Input:
+
+golden = [
+    Location(0, 0.0, 0.0),
+    Location(10, 10.0, 0.0),
+    Location(20, 20.0, 0.0)
+]
+measured = [
+    Location(5, 4.0, 1.0),
+    Location(15, 16.0, 1.0)
+]
+Output:
+
+~2.83
+Explanation:
+
+First measurement at time 5: expected (5.0, 0.0), measured (4.0, 1.0), error ≈ 1.41
+Second measurement at time 15: expected (15.0, 0.0), measured (16.0, 1.0), error ≈ 1.41
+Total error ≈ 2.83
+Constraints
+2 <= len(golden_locations) <= 10^5
+1 <= len(measured_locations) <= 10^5
+Timestamps are strictly increasing in both lists
+All timestamps are non-negative integers
+Longitude and latitude are floats in range [-180.0, 180.0]
+Notes
+Use linear interpolation for expected location calculation
+Handle edge case where total_time = 0 to avoid division by zero
+Both golden and measured location lists are sorted by timestamp
+Use Euclidean distance (not Haversine) for simplicity
