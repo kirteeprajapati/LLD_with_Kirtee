@@ -1,0 +1,94 @@
+Visit All Cities (Reconstruct Itinerary)
+Problem Statement
+
+You are given a list of airline tickets, each represented as a directed edge from a departure airport to an arrival airport:
+
+tickets = [["JFK", "SFO"], ["JFK", "ATL"], ["SFO", "ATL"], ["ATL", "JFK"], ["ATL","SFO"]]
+Goal: Construct an itinerary that:
+
+Uses all tickets exactly once.
+
+Starts from the first available starting airport (often "JFK" in classic problems, but could be any given starting point).
+
+Is lexicographically smallest if multiple valid itineraries exist.
+
+Key Points
+
+Tickets form a directed graph.
+
+You are essentially performing a Eulerian path traversal on the graph (visit every edge exactly once).
+
+If multiple outgoing edges exist, choose the lexicographically smallest airport first.
+
+Examples
+Example 1
+
+Input:
+
+tickets = [["MUC","LHR"],["JFK","MUC"],["SFO","SJC"],["LHR","SFO"]]
+
+
+Output:
+
+["JFK","MUC","LHR","SFO","SJC"]
+
+
+Explanation:
+
+Start at JFK → MUC → LHR → SFO → SJC.
+
+All tickets used exactly once.
+
+Example 2
+
+Input:
+
+tickets = [["JFK","SFO"], ["JFK","ATL"], ["SFO","ATL"], ["ATL","JFK"], ["ATL","SFO"]]
+
+
+Output:
+
+["JFK","ATL","JFK","SFO","ATL","SFO"]
+
+
+Explanation:
+
+Multiple paths exist; choose lexicographically smallest at each step.
+
+Constraints
+
+1 <= tickets.length <= 320
+
+Each ticket is a pair of strings [from, to]
+
+All airports consist of 3 capital letters
+
+At least one valid itinerary exists
+
+Implementation Hints
+
+Graph Representation:
+
+Use a defaultdict(list) or heap to store destinations for each airport.
+
+Sort destinations to make lexicographic selection easy.
+
+DFS / Backtracking Approach:
+
+Start from the given starting airport.
+
+Recurse through destinations.
+
+Remove tickets as you use them.
+
+If stuck before using all tickets, backtrack.
+
+Eulerian Path Approach (Hierholzer’s Algorithm):
+
+Append airport to the itinerary after visiting all outgoing edges.
+
+Reverse the itinerary at the end.
+
+Python Function Signature
+def find_itinerary(tickets: List[Tuple[str, str]]) -> List[str]:
+    pass

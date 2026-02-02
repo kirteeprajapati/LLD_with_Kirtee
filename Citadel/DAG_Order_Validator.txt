@@ -1,0 +1,51 @@
+DAG Order Validator
+
+Given a Directed Acyclic Graph (DAG) and a list of nodes,
+determine if the list represents a valid topological sort of the graph.
+
+A topological sort of a DAG is a linear ordering of its nodes such that
+for every directed edge u -> v, node u appears before node v in the ordering.
+
+Function to implement:
+is_valid_topological_sort(nodes: List[str], edges: List[Tuple[str, str]]) -> bool
+
+Parameters:
+- nodes: A list of node labels representing the proposed topological order
+- edges: A list of directed edges (u, v) where u must come before v
+
+Return:
+- True if the given node list is a valid topological sort, otherwise False
+
+Examples:
+
+Example 1:
+Input:
+nodes = ["A", "B", "C", "D", "E"]
+edges = [("A", "B"), ("B", "C"), ("A", "C"), ("C", "D")]
+
+Output:
+True
+
+Explanation:
+All edges satisfy the ordering:
+- A before B
+- B before C
+- A before C
+- C before D
+
+Example 2:
+Input:
+nodes = ["D", "B", "A", "C"]
+edges = [("A", "B"), ("B", "C")]
+
+Output:
+False
+
+Explanation:
+Node A appears after B, which violates the edge A -> B.
+
+Constraints:
+- 1 <= number of nodes <= 10^5
+- Edges form a valid DAG (no cycles)
+- Each node label is unique
+- Edges are only between nodes in the graph

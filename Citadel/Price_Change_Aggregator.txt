@@ -1,0 +1,28 @@
+Question
+You are building a system to aggregate price updates from multiple feeds to reconstruct the price history of an asset.
+
+Part 1 — Merge Price Changes
+You are given K sorted lists of Price Change events. Each list represents a stream of updates from a source (e.g., an exchange). Each event is a tuple [timestamp, price_change].
+
+Your task is to merge these K lists into a single sorted list of Absolute Prices. The absolute price is the cumulative sum of all price changes up to that point in time. Assume the initial price at time 0 is 0.
+
+Rules
+Sort by Timestamp: The output list must be sorted by timestamp in ascending order.
+Aggregate Deltas: If multiple price changes occur at the exact same timestamp (across same or different lists), sum their deltas together for that timestamp before calculating the new price.
+Cumulative Sum: The output value should be the absolute price (running total), not the delta.
+Input Constraints:
+Each input list is sorted by timestamp (strictly increasing).
+Timestamps are positive integers.
+Example 1
+Input:
+
+feed1 = [[1, 5], [4, -2]]
+feed2 = [[2, 3], [4, 1]]
+Explanation:
+
+T=1: feed1 adds +5. Current Price = 0 + 5 = 5. Output: [1, 5]
+T=2: feed2 adds +3. Current Price = 5 + 3 = 8. Output: [2, 8]
+T=4: feed1 adds -2, feed2 adds +1. Net change = -1. Current Price = 8 - 1 = 7. Output: [4, 7]
+Output:
+
+[[1, 5], [2, 8], [4, 7]]
