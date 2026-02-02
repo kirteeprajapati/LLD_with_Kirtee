@@ -91,3 +91,51 @@ Use linear interpolation for expected location calculation
 Handle edge case where total_time = 0 to avoid division by zero
 Both golden and measured location lists are sorted by timestamp
 Use Euclidean distance (not Haversine) for simplicity
+
+
+
+GPS Error Tracking
+
+You are tracking GPS location errors by comparing measured GPS locations
+against a set of accurate reference locations called "golden" locations.
+
+Each location consists of:
+- timestamp (integer)
+- longitude (float)
+- latitude (float)
+
+You are given two lists:
+1. golden_locations: reference GPS locations with correct positions
+2. measured_locations: GPS readings from a device being tested
+
+Both lists are sorted by timestamp in strictly increasing order.
+
+For each measured location:
+- Find the two golden locations whose timestamps surround the measured timestamp
+- Linearly interpolate the expected longitude and latitude based on time
+- Compute the Euclidean distance between the expected position and
+  the measured position
+
+The total GPS error is the sum of distances for all measured locations.
+
+If a measured timestamp lies exactly on a golden timestamp,
+the expected location is that golden location.
+
+You must implement a function that returns the total distance error.
+
+Distance metric:
+- Use Euclidean distance
+- Do NOT use Haversine or spherical distance
+
+Constraints:
+- 2 ≤ number of golden locations ≤ 100,000
+- 1 ≤ number of measured locations ≤ 100,000
+- All timestamps are non-negative integers
+- Longitude and latitude values are in range [-180.0, 180.0]
+
+Edge Cases:
+- Handle cases where interpolation time interval is zero
+- Both input lists are guaranteed to be sorted by timestamp
+
+Goal:
+Efficiently compute the total GPS distance error.
