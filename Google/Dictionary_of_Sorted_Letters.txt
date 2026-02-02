@@ -1,0 +1,53 @@
+Problem: Dictionary of Sorted Letters
+Difficulty: Medium
+
+You are given a string s where the characters are sorted in non-decreasing (alphabetical) order.
+
+Your task is to identify all characters that appear more than twice in the string.
+For each such character, record:
+- the character itself
+- the total number of times it appears
+- the index of its first occurrence
+- the index of its last occurrence
+
+Indices are zero-based.
+
+Return the result as a list of lists, where each inner list contains:
+[character, count, first_index, last_index]
+
+If no character appears more than twice, return an empty list.
+
+Input:
+- A string s
+- 1 <= length of s <= 80
+- s contains only lowercase English letters
+- s is already sorted alphabetically
+
+Output:
+- A list of lists describing characters that appear more than twice
+
+Example 1:
+Input:
+s = "pajbsbactdke"
+
+Output:
+[
+  ["a", 3, 2, 6],
+  ["b", 3, 4, 5],
+  ["c", 3, 8, 8]
+]
+
+Explanation:
+- 'a' appears 3 times, first at index 2, last at index 6
+- 'b' appears 3 times, first at index 4, last at index 5
+- 'c' appears 3 times, first at index 8, last at index 8
+
+Example 2:
+Input:
+s = "daybrc"
+
+Output:
+[]
+
+Explanation:
+No character appears more than twice.

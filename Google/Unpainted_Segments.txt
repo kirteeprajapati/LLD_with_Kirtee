@@ -1,0 +1,46 @@
+Problem Name: Unpainted Segments
+Difficulty: Medium
+
+Problem Statement:
+You are given a number line and a sequence of painting operations.
+Each painting operation is represented as an interval [L, R].
+
+For every operation:
+1. Calculate the total length of the segment within [L, R] that has NOT been painted by any previous operation.
+2. Record this length as the result for the current operation.
+3. Paint the entire interval [L, R], so it is considered painted for future operations.
+
+All operations are processed in the given order.
+
+Your task is to return an array where each element corresponds to the unpainted length calculated for each operation.
+
+Definitions:
+- Painting an interval marks every point in that interval as painted.
+- Overlapping painted regions should not be counted again.
+
+Input:
+- An integer N representing the number of operations.
+- A list of N intervals, where each interval is [L, R].
+
+Output:
+- An array of N integers.
+- The i-th integer represents the length of the unpainted portion of interval [L, R] during the i-th operation.
+
+Constraints:
+- 1 ≤ N ≤ 10^5
+- 1 ≤ L ≤ R ≤ 10^9
+- Operations must be processed sequentially.
+
+Example 1:
+Input:
+N = 4
+Intervals = [[4, 40], [8, 18], [23, 37], [1, 80]]
+
+Output:
+[36, 0, 5, 28]
+
+Explanation:
+- Operation 1 paints [4, 40], unpainted length = 36
+- Operation 2 overlaps completely with painted region, unpainted length = 0
+- Operation 3 paints [23, 37], only [36, 40] is new → length = 5
+- Operation 4 paints [1, 80], unpainted segments are [1,4) and (40,80] → length = 28
