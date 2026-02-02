@@ -1,0 +1,144 @@
+Title: Design Iterators
+Difficulty: Hard
+Language: Python
+Test Cases: 8
+
+==================================================
+QUESTION
+==================================================
+
+You are tasked with designing a series of iterator classes. The problem is split into multiple parts that build upon each other.
+
+--------------------------------------------------
+PART 1 — Zigzag Traversal of a 2D List
+
+Given a list of lists of integers (2D array), return a single list of integers representing a Zigzag traversal (interleaving traversal).
+
+Rules:
+- First, take the first element from each inner list in order.
+- Then take the second element from each inner list in order.
+- Continue until all inner lists are exhausted.
+
+Implement the Zigzag iterator class:
+- `ZigzagIterator(List<List<Integer>> lists)` initializes the iterator with the 2D list.
+- `hasNext()` returns true if elements remain.
+- `next()` returns the current element and advances the iterator.
+
+Example 1:
+Input:
+lists = [[1, 2, 3], [4, 5], [6]]
+Output:
+[1, 4, 6, 2, 5, 3]
+
+Example 2:
+Input:
+lists = [[1, 2, 3], [6], [7, 8]]
+Output:
+[1, 6, 7, 2, 8, 3]
+
+--------------------------------------------------
+PART 2 — Basic Iterator Classes
+
+Implement two iterator classes:
+
+1. ListIterator
+- Iterates over a simple list of integers.
+Constructor: `ListIterator(List<Integer> nums)`
+Example:
+nums = [10, 20, 30]
+iterator.next() -> 10
+iterator.next() -> 20
+iterator.next() -> 30
+iterator.hasNext() -> false
+
+2. RangeIterator
+- Enumerates numbers from start to end with a given step.
+Constructor: `RangeIterator(int start, int end, int step)`
+Rules:
+- Produces sequence: start, start+step, start+2*step, ...
+- Stops before reaching end (for positive step) or dropping below end (for negative step).
+- Invalid step or range should handle gracefully.
+Example:
+iterator = RangeIterator(1, 7, 2)
+iterator.hasNext() -> true
+iterator.next() -> 1
+iterator.next() -> 3
+iterator.next() -> 5
+iterator.hasNext() -> false
+
+--------------------------------------------------
+PART 3 — Interleaving Iterator
+
+Given a list of iterators (with hasNext() and next()), implement an InterleaveIterator that pulls items in round-robin order.
+
+Constructor: `InterleaveIterator(List<Iterator<Integer>> iterators)`
+Rules:
+- On each next(), return one element from the current iterator.
+- Move to next iterator for the next call.
+- Skip exhausted iterators.
+- Stop when all iterators are exhausted.
+
+Example:
+iter1 = ListIterator([10, 20])
+iter2 = RangeIterator(1, 5, 1)
+interleaver = InterleaveIterator([iter1, iter2])
+Output:
+[10, 1, 20, 2, 3, 4]
+
+--------------------------------------------------
+PART 4 — Filtering Iterator
+
+Wrap an iterator (or list) and only return elements satisfying a filter (predicate).
+
+Constructor: `FilteringIterator(Iterator<Integer> iterator, Predicate<Integer> filter)`
+
+Rules:
+- next() returns next element satisfying the filter.
+- hasNext() returns true if such element exists.
+
+Example:
+nums = [1, 2, 3, 4, 5, 6]
+isEven = x -> x % 2 == 0
+iterator = FilteringIterator(nums, isEven)
+Output:
+[2, 4, 6]
+
+--------------------------------------------------
+PART 5 — Cyclic Iterator
+
+Implement a Cyclic Iterator that iterates indefinitely through a given collection. When the end is reached, restart from the beginning.
+
+Constructor: `CyclicIterator(List<Integer> nums)` 
+or extend InterleaveIterator with `isCycled=true`.
+
+Rules:
+- If isCycled is true, repeat iteration from first iterator after last is processed.
+- Reset exhausted iterators if possible, or cycle over cached values.
+
+Example:
+lists = [[1, 2], [3]]
+iterator = InterleaveIterator(lists, isCycled=true)
+limit = 10
+Output:
+[1, 3, 2, 1, 3, 2, 1, 3, 2, 1]
+Explanation: sequence [1, 3, 2] repeats.
+
+--------------------------------------------------
+CONSTRAINTS
+
+- k = number of lists or iterators
+- N = total number of integers across all sources
+- 1 <= k <= 100,000
+- 1 <= N <= 100,000
+- All integers fit in 32-bit signed range
+
+--------------------------------------------------
+FUNCTION SIGNATURE
+
+def iterators(operation: str, data: Any):
+    # Implement iterator operation
+    pass
+
+Parameters:
+- operation: 'zigzag', 'list', 'range', 'interleave', 'filter', 'cyclic'
+- data: input data; depends on operation type (list for zigzag/interleave/cyclic, single list for list/filter, start/end/step for range)

@@ -1,0 +1,108 @@
+Title: Food Delivery System
+Difficulty: Medium
+Language: Python
+Test Cases: 8
+
+==================================================
+QUESTION
+==================================================
+
+You are tasked with designing a food delivery system. The problem has three related parts, evolving from basic data retrieval to analytics and optimization.
+
+--------------------------------------------------
+PART 1 — Basic Queries
+
+Given restaurants and menu items:
+
+- Restaurants: list of (restaurant_id, x, y) coordinates
+- Items: list of (restaurant_id, item_name, price)
+
+Implement queries:
+
+1. Cheapest Item: Given an item_name, return the restaurant_id offering the lowest price.
+2. Nearest Restaurant: Given a user location (x, y) and item_name, return the restaurant_id with the minimum distance. Distance = sqrt((x1-x2)^2 + (y1-y2)^2).
+
+Example:
+Restaurants: {1: (0,0), 3: (3,3), 5: (10,10)}
+Items:
+{1, "Burger", 60}
+{3, "Fries", 8}
+{5, "Pizza", 16}
+
+Queries:
+- cheapest("Burger") -> 1
+- nearest((1,1), "Pizza") -> 5
+
+--------------------------------------------------
+PART 2 — Analytics
+
+Compute aggregated statistics over time or regions:
+
+- Orders: list of order data (restaurant_id, user_id, quantity, etc.)
+- Implement a function `queryAnalytics(start, end)` to compute:
+  1. Total orders
+  2. Total revenue
+  3. Average spending per order
+
+Example:
+Orders:
+{restaurant_id: 191, user_id: 0, quantity: 3}
+{restaurant_id: 102, user_id: 90, quantity: 6}
+{restaurant_id: 173, user_id: 40, quantity: 5}
+
+Query: [1,5]
+
+Output:
+- Count: 6
+- Total Revenue: 70
+- Average Spend: 20
+
+--------------------------------------------------
+PART 3 — Optimized Delivery and Scheduling
+
+Design a delivery system that can optimize assignments:
+
+- Parameters: restaurant locations, item prices, user orders
+- Objectives:
+  1. Minimize delivery time: `min_time(user_x, user_y, item_name, speed)`
+  2. Minimize delivery cost: `min_cost(user_x, user_y, item_name, delivery_rate)`
+  3. Schedule deliveries efficiently
+
+Example:
+User location: (3.2, 1.6)
+Restaurants:
+R8: (5.5, 6.8, "Auigkr", $0)
+R1: (5.1, 8.7, "Juggrr", $70)
+
+Schedule: 40 minutes
+Delivery Cost Rate: $0.6 per km
+
+Queries:
+- min_time("Buzgzr") -> returns fastest delivery schedule
+- min_cost("Tungvr") -> returns cheapest delivery schedule
+
+--------------------------------------------------
+CONSTRAINTS
+
+- 1 <= number of restaurants <= 14^4
+- 1 <= number of items <= 13^5
+- 1 <= number of orders <= 50^4
+- Optimize for performance and correctness
+- Edge cases must be handled
+
+--------------------------------------------------
+FUNCTION SIGNATURE
+
+def food_delivery_system(restaurants: List[Any], items: List[Any], query: Any):
+    # Implement system logic
+    pass
+
+Parameters:
+- restaurants: list of (restaurant_id, x, y) coordinates
+- items: list of (restaurant_id, item_name, price)
+- query: tuple
+    - ('cheapest', item_name)
+    - ('nearest', (user_x, user_y, item_name))
+    - ('analytics', (start, end))
+    - ('min_time', (user_x, user_y, item_name, speed))
+    - ('min_cost', (user_x, user_y, item_name, delivery_rate))

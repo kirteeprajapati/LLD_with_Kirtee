@@ -1,0 +1,149 @@
+Title: Crypto Trading System Stream
+Difficulty: Medium
+Language: Python
+Test Cases: 8
+
+==================================================
+QUESTION
+==================================================
+
+Design a crypto trading system that manages a stream of orders.
+
+The system should support operations such as placing, pausing, resuming, canceling orders, and displaying active orders. Orders arrive as a stream and must be processed in real time.
+
+--------------------------------------------------
+
+PART 1 — Order Management Core
+
+Implement a class CryptoTradingSystem that supports managing live orders across streams.
+
+Each order contains:
+- Order ID
+- Currency
+- Amount
+- Timestamp
+- Order Type (e.g., buy, sell)
+- User ID
+
+All orders are processed in order of time.
+
+The system must support the following operations:
+
+1. placeOrder(orderId, currency, amount, timestamp, type, userId)
+   - Places a new order into the system.
+   - Orders are stored based on timestamp.
+   - If the order ID already exists, the operation is ignored.
+
+2. pauseOrder(orderId)
+   - Pauses the given order.
+   - A paused order does not appear in active listings.
+   - If the order does not exist or is already inactive, ignore.
+
+3. resumeOrder(orderId)
+   - Resumes a paused order.
+   - Restored to its correct position based on timestamp.
+   - Ignore if order does not exist or is already active.
+
+4. cancelOrder(orderId)
+   - Permanently removes the order from the system.
+   - Ignore if the order does not exist.
+
+5. displayActiveOrders()
+   - Returns a list of currently active order IDs.
+   - Orders must be sorted by timestamp.
+
+--------------------------------------------------
+
+EXAMPLE 1
+
+Input:
+system = new CryptoTradingSystem()
+
+system.placeOrder("ord-3", "BTC", 200, 1700, "buy", "user-4")
+system.placeOrder("ord-4", "ETH", 50, 4005, "sell", "user-5")
+system.cancelOrder("ord-2")
+system.displayActiveOrders()
+
+Output:
+["ord-1"]
+
+Explanation:
+- Only valid, active orders are returned.
+- Canceled or paused orders are excluded.
+
+--------------------------------------------------
+
+PART 2 — Cancel All Orders by User
+
+Add support for canceling all orders belonging to a given user.
+
+Operation:
+cancelAllOrders(userId)
+
+Rules:
+- Cancels all active and paused orders for the given user.
+- Orders are removed permanently.
+- Operation should be efficient.
+
+--------------------------------------------------
+
+EXAMPLE 2
+
+Input:
+system.placeOrder("ord-5", "BTC", 40, 6090, "buy", "user-1")
+system.placeOrder("ord-6", "LTC", 30, 1085, "sell", "user-1")
+system.cancelAllOrders("user-1")
+
+Output:
+3
+
+Explanation:
+- Three orders belonging to user-1 were canceled.
+
+--------------------------------------------------
+
+PART 3 — Extended System (Advanced)
+
+The system should support:
+1. Sharding orders across multiple streams.
+2. Efficient concurrency-safe handling.
+3. Consistent ordering within shards.
+4. Order types: place, pause, resume, cancel, display, cancelAll.
+
+Notes:
+- For streamCount > 1, distribute orders using a hash strategy.
+- Order consistency must be preserved per shard.
+
+--------------------------------------------------
+
+FUNCTION SIGNATURE (Python)
+
+def crypto_trading_system(operations, streamCount):
+    # Write your solution here
+    pass
+
+--------------------------------------------------
+
+PARAMETERS
+
+operations:
+  List of operations:
+  - ("place", [id, currency, amount, timestamp, type, userId])
+  - ("pause", [id])
+  - ("resume", [id])
+  - ("cancel", [id])
+  - ("display", [])
+  - ("cancelAll", [userId])
+
+streamCount:
+  Number of shards (use 1 for Parts 1 and 2)
+
+--------------------------------------------------
+
+CONSTRAINTS
+
+- Stream count: 2 to 408
+- Orders must be processed in order
+- Order IDs are unique
+- User IDs may have multiple orders
+- Hashing should be deterministic

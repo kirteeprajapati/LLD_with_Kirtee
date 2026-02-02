@@ -1,0 +1,90 @@
+Title: Blockchain Mining
+Difficulty: Medium
+Language: Python
+Test Cases: 8
+
+==================================================
+QUESTION
+==================================================
+
+You are building a block construction module for a blockchain node.
+
+The goal is to select a subset of pending transactions to include in the next block such that the total transaction fees are maximized, while respecting the block size limit.
+
+--------------------------------------------------
+
+PART 1 — Transaction Selection Problem
+
+You are given a list of pending transactions. Each transaction contains:
+- id: Unique transaction identifier
+- size: Size of the transaction
+- fee: Transaction fee earned
+- parentId: Parent transaction ID (0 means no parent)
+
+You are also given a blockSize limit.
+
+TASK:
+Select a subset of transactions such that:
+1. The sum of transaction sizes does not exceed blockSize.
+2. The total transaction fee is maximized.
+
+NOTE:
+This problem resembles the Knapsack Problem, but with dependencies between transactions. A transaction can only be included if its parent transaction is included first.
+
+--------------------------------------------------
+
+FUNCTION SIGNATURE
+
+select_transactions(transactions, blockSize)
+
+--------------------------------------------------
+
+EXAMPLE 1
+
+Input:
+blockSize = 90
+transactions = [
+  {id: 1, size: 9, fee: 5},
+  {id: 2, size: 7, fee: 7},
+  {id: 3, size: 3, fee: 2},
+  {id: 4, size: 9, fee: 75}
+]
+
+Output:
+[4, 1, 2]
+
+Explanation:
+- Transaction 4 gives the highest fee.
+- Transactions are selected while respecting block size.
+- Dependencies and optimal ordering are considered.
+
+--------------------------------------------------
+
+PART 2 — Dependency Validation
+
+Transactions may form chains of dependencies.
+
+Rules:
+- If a transaction has a parent, the parent must be included first.
+- Cyclic dependencies are invalid.
+- A transaction with missing parent is invalid.
+
+TASK:
+Validate the dependency graph and ensure only valid transactions are included.
+
+--------------------------------------------------
+
+CONSTRAINTS
+
+- Number of transactions: up to 100,000
+- Block size: up to ~2 million
+- Transaction size: up to ~30,000
+- Fee: up to ~2 million
+
+--------------------------------------------------
+
+STARTER CODE (Python)
+
+def select_transactions(transactions, blockSize):
+    # Write your solution here
+    pass

@@ -1,0 +1,92 @@
+Title: Generate NFT
+Difficulty: Medium
+Language: Python
+Test Cases: 9
+
+==================================================
+QUESTION
+==================================================
+
+You are designing an NFT generation engine. You are given a set of Traits, where each trait has a name and a list of possible Values. You are also given a Cumulative Distribution Function (CDF) corresponding to these values to determine their generation probabilities.
+
+Requirements:
+1. Trait Handling: Select values for each trait according to their probability distribution (CDF or weights).
+2. Deterministic Generation: Use a provided sequence of random numbers to ensure deterministic output.
+3. Uniqueness: Generate up to 'n' unique NFTs based on the configuration and provided random numbers.
+
+--------------------------------------------------
+PART 1 — Basic NFT Generation
+
+Given a set of traits, produce a list of NFTs:
+
+Example Input:
+config = {
+  "name": "collection-1",
+  "symbol": "CLCT",
+  "traits": {
+    "color": ["red", "blue", "green"],
+    "background": ["sky", "forest", "desert"],
+    "pattern": ["dots", "stripes", "plain"]
+  }
+},
+n = 9
+
+Example Output:
+[
+  {"color": "red", "background": "sky", "pattern": "dots"},
+  {"color": "blue", "background": "forest", "pattern": "stripes"},
+  {"color": "green", "background": "desert", "pattern": "plain"},
+  ...
+]
+
+--------------------------------------------------
+PART 2 — Weighted NFT Generation
+
+The NFT generation engine may include **weights or CDFs** for trait values. The deterministic random numbers in [0,1) are used to select values according to their probabilities.
+
+--------------------------------------------------
+PART 3 — Uniqueness Enforcement
+
+Ensure that each NFT generated is unique. If a random combination has already been produced, skip or adjust to the next available combination. If the requested number of NFTs exceeds possible unique combinations, return as many as possible.
+
+Example Input:
+config = {
+  "name": "collection-1",
+  "symbol": "CLCT",
+  "traits": {
+    "color": [("red", 160), ("blue", 2)],
+    "background": [("sky", 54), ("forest", 20)]
+  }
+},
+n = 2
+
+Example Output:
+[
+  {"color": "red", "background": "sky"},
+  {"color": "blue", "background": "forest"},
+  {"color": "red", "background": "forest"},
+]
+
+Explanation:
+- Weighted selections are handled according to CDFs or provided weights.
+- Deterministic random numbers allow reproducible NFT generation.
+
+--------------------------------------------------
+CONSTRAINTS
+
+- 1 <= number of traits <= 13,000
+- Number of possible values per trait: [9, 16]
+- Random numbers in [0, 1)
+- Ensure deterministic selection using sequential random numbers
+
+--------------------------------------------------
+FUNCTION SIGNATURE
+
+def generate_nfts(config: Any, n: int, random_numbers: List[float]):
+    # Implement NFT generation logic
+    pass
+
+Parameters:
+- config: NFT generation configuration containing traits and optional probability configuration (CDFs or weights)
+- n: Number of unique NFTs requested
+- random_numbers: Deterministic random numbers in [0,1) consumed sequentially for weighted selections

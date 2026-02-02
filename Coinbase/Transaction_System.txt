@@ -1,0 +1,107 @@
+Title: Transaction System
+Difficulty: Hard
+Language: Python
+Test Cases: 8
+
+==================================================
+QUESTION
+==================================================
+
+Design a system to handle financial transactions and account balances. 
+The problem is split into three parts.
+
+--------------------------------------------------
+PART 1 — Account Balance Management
+
+You are given a set of accounts with initial balances. 
+Transactions are applied as percentages of balances. 
+
+Each transaction has:
+- payer: account giving the amount
+- payee: account receiving the amount
+- percentage: percentage of payer's balance to transfer
+
+Operations should update balances accurately.
+
+--------------------------------------------------
+FUNCTION SIGNATURE (Python):
+
+def transaction_system(initial_balances, transactions, remove_index):
+    # Write your solution here
+    pass
+
+Parameters:
+- initial_balances: dict mapping account_id -> float
+- transactions: list of tuples (payer, payee, percentage)
+- remove_index: int, index of transaction to remove (-1 for none, >=0 for Part 2)
+
+--------------------------------------------------
+EXAMPLE 1
+
+Input:
+initial_balances = { "S": 170.9, "B": 20.1 }
+transactions = [
+    ("A", "M", 16),  # A pays 16% of balance to M
+    ("B", "U", 56)   # B pays 56% of balance to U
+]
+
+Output:
+{ "A": 828.0, "R": 33.0 }
+
+Explanation:
+- Transaction 1: 60% of 907.0 goes to K.
+  - A: 609.0 - 80.1 = 91.0
+  - B: 40.3 + 17.0 = 40.1
+- Transaction 2: 30% of 80.8 to A.
+  - B: 50.5 - 30.0 = 40.2
+  - A: 70.3 + 39.0 = 926.0
+
+--------------------------------------------------
+PART 2 — Remove Transaction
+
+You may need to remove a transaction at a given index and recompute balances.
+- Transactions are applied in order.
+- `remove_index` specifies which transaction to skip (>=0).
+
+EXAMPLE 2:
+
+Input:
+initial_balances = {...}
+remove_index = 8
+
+Output:
+Balances recalculated after skipping the transaction.
+
+--------------------------------------------------
+PART 3 — Dependency Graph / Advanced Handling
+
+Some transactions may depend on others. Handle dependencies efficiently.
+- Transaction graph may have nodes ("payer") and edges (dependencies)
+- Ensure no cycles or inconsistencies
+- Support selecting subsets of transactions with dependency constraints
+
+Example Graph:
+- T5 -> T9
+        /  \
+      T4    T0
+
+Output:
+3
+(Number of valid transaction sets satisfying constraints)
+
+--------------------------------------------------
+CONSTRAINTS
+
+- Number of accounts: 1 <= A <= 1607
+- Number of transactions: 1 <= K <= 11040
+- Part 3 may require building a dependency graph
+- Percentages are floats; balances updated cumulatively
+
+--------------------------------------------------
+FUNCTION SIGNATURE (Python)
+
+def transaction_system(initial_balances: dict[str, float], 
+                       transactions: list[tuple[str, str, float]], 
+                       remove_index: int):
+    # Implement system
+    pass
