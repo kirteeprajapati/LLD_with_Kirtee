@@ -126,8 +126,19 @@ class ZigZagIterator: public IIterator<T>{
     }
 };
 
+ /*--------------------------------------------------
+PART 3 — Interleaving Iterator
+This is multiple iterators round-robin.
+--------------------------------------------------*/
+//Patter used Queue of Iterators: each iterator adavances only when used
 
-int main(){
+template <typename T>
+class InterleavingIterator : public IIterator<T>{
+    private:
+        queue<IITerator<T>*> iters;
+}
+
+int main2(){
     
     /*--------------------------------------------------
      PART 1 — Vector Traversal of a 2D List
@@ -139,6 +150,55 @@ int main(){
     cout<<"You likely consumed everything"<<endl;
     
     
+    /*--------------------------------------------------
+     PART 2 — Zigzag Traversal of a 2D List
+    --------------------------------------------------*/
+    {
+        ZigZagIterator<string> zzIT({
+        {"sdasf", "two"}, \
+        {"kirtee"}, 
+        {"fa", "dsafa", "dfasfaga", "fdafaga"}});
+    
+        while(zzIT.hasNext()){
+            cout<<zzIT.next()<<endl;
+        }
+        cout<<"Taversal finnished and seems like queue got empty for string data type"<<endl;
+    }
+    
+    {
+        std::vector<vector<int>> numsMatrix={{1, 3, 54}, {3}, {}, {343, 5}};
+        ZigZagIterator<int> zizzagIntIterator(numsMatrix);
+        while(zizzagIntIterator.hasNext()){
+        cout<<zizzagIntIterator.next()<<endl;
+    }
+    cout<<"Taversal finnished and seems like queue got empty for int data type"<<endl;
+    
+    }
+    
+}
+
+
+int main(){
+    
+    /*--------------------------------------------------
+     PART 1 — Basic Iterator (Vector Iterator)
+    --------------------------------------------------*/
+    VectorIterator<int> vecIT({1, 3, 54});
+    while(vecIT.hasNext()){
+        cout<<"Next element in the vector is: "<< vecIT.next()<< endl;
+    }
+    cout<<"You likely consumed everything"<<endl;
+    
+    {
+        std::vector<int> data = {10, 20, 30, 40};
+
+        VectorIterator<int> vectorIt(data);
+            while(vectorIt.hasNext()){
+                 cout<<"Next element in the vector is: "<< vectorIt.next()<< endl;
+            }
+         cout<<"You likely consumed everything"<<endl;
+    }
+
     /*--------------------------------------------------
      PART 2 — Zigzag Traversal of a 2D List
     --------------------------------------------------*/
