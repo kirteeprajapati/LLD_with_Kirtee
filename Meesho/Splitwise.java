@@ -118,50 +118,30 @@ class ExpenseService {
                 continue;
             }
 
-            Set<String> borrowers =
-                    new HashSet<>(
-                            balances.get(user1).keySet());
+            Set<String> borrowers = new HashSet<>(balances.get(user1).keySet());
 
             for (String user2 : borrowers) {
 
-                if (balances.containsKey(user2)
-                        && balances.get(user2)
-                        .containsKey(user1)) {
+                if (balances.containsKey(user2) && balances.get(user2).containsKey(user1)) {
 
-                    double amount1 =
-                            balances.get(user1)
-                                    .get(user2);
-
-                    double amount2 =
-                            balances.get(user2)
-                                    .get(user1);
-
-                    double net =
-                            amount1 - amount2;
+                    double amount1 = balances.get(user1).get(user2);
+                    double amount2 = balances.get(user2).get(user1);
+                    double net = amount1 - amount2;
 
                     if (net > 0) {
 
-                        balances.get(user1)
-                                .put(user2, net);
-
-                        balances.get(user2)
-                                .remove(user1);
+                        balances.get(user1).put(user2, net);
+                        balances.get(user2).remove(user1);
 
                     } else if (net < 0) {
 
-                        balances.get(user2)
-                                .put(user1, -net);
-
-                        balances.get(user1)
-                                .remove(user2);
+                        balances.get(user2).put(user1, -net);
+                        balances.get(user1).remove(user2);
 
                     } else {
 
-                        balances.get(user1)
-                                .remove(user2);
-
-                        balances.get(user2)
-                                .remove(user1);
+                        balances.get(user1).remove(user2);
+                        balances.get(user2).remove(user1);
                     }
                 }
             }
