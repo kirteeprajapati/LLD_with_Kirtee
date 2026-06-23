@@ -1,0 +1,130 @@
+Problem: Design a Text Editor with Undo/Redo
+You are asked to implement a simplified text editor that supports basic editing operations along with undo and redo functionality.
+
+📌 Functional Requirements
+
+Implement a TextDocument class that supports the following operations:
+
+InsertAtEnd(text: string)
+Appends the given string to the end of the current document.
+
+DeleteFromEnd(k: int)
+Removes the last k characters from the document.
+If k is greater than the current document length, delete all characters.
+
+undoLast()
+Reverses the most recent operation (Insert or Delete).
+
+If the last operation was Insert, undo it.
+
+If the last operation was Delete, restore the deleted text.
+
+If there is nothing to undo, do nothing.
+
+redoLast()
+Re-applies the most recently undone operation.
+
+If there is nothing to redo, do nothing.
+
+getText() → string
+Returns the current state of the document.
+
+📌 Undo/Redo Rules
+
+Every time an operation (Insert/Delete) is applied:
+
+It must be pushed onto an Undo Stack.
+
+When undoLast() is called:
+
+Pop from the Undo Stack.
+
+Reverse the operation.
+
+Push the original operation onto the Redo Stack.
+
+When redoLast() is called:
+
+Pop from the Redo Stack.
+
+Re-apply the operation.
+
+Push it back onto the Undo Stack.
+
+🔴 Important:
+If a new operation (Insert/Delete) is applied after an undo:
+
+The Redo Stack must be cleared.
+
+Previously undone operations can no longer be redone.
+
+This mimics real-world editor behavior (like Notion, Google Docs, VSCode).
+
+📌 Constraints
+
+1 ≤ length of inserted string ≤ 10⁴
+
+0 ≤ k ≤ 10⁴
+
+Up to 10⁵ operations may be performed
+
+All operations should ideally be efficient (O(1) or amortized O(1) where possible)
+
+📌 Example
+InsertAtEnd("hello")
+InsertAtEnd(" world")
+DeleteFromEnd(6)
+undoLast()
+undoLast()
+redoLast()
+Step-by-step:
+
+"hello"
+
+"hello world"
+
+"hello"
+
+undo delete → "hello world"
+
+undo insert → "hello"
+
+redo insert → "hello world"
+
+📌 Important Design Insight
+
+When performing DeleteFromEnd(k):
+
+You must store the actual deleted substring
+
+Otherwise, you cannot correctly undo the deletion
+
+So operations must be stored along with metadata.
+
+🎯 What This Question Tests in Interview
+
+Stack usage
+
+Designing reversible operations
+
+Edge cases
+
+Clean class design
+
+Time/space complexity thinking
+
+Handling real-world behavior (clearing redo stack)
+
+Communication clarity
+
+Now in a real 1-hour interview, here’s how it would be structured:
+
+Clarify requirements (5–10 min)
+
+High-level approach (10–15 min)
+
+Define data structures (10 min)
+
+Code implementation (20–25 min)
+
+Edge cases + complexity (10 min)
